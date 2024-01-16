@@ -226,6 +226,7 @@ def render(
 
 
 if __name__ == "__main__":  # pragma: no cover
+
     MARKUP = [
         "[red]Hello World[/red]",
         "[magenta]Hello [b]World[/b]",
