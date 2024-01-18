@@ -1,7 +1,9 @@
 """
 Database models.
 """
+from email.policy import default
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -43,3 +45,20 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
+class Chat(models.Model):
+    """Chat model."""
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    title = models.CharField(max_length=255, default='Untitled')
+    summary = models.TextField(blank=True)
+    content = models.JSONField(blank=True)
+
+    # participants, messages, memory, tools, etc.
+
+    def __str__(self):
+        """Return string representation of the chat."""
+        return str(self.title)

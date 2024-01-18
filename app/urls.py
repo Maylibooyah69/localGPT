@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
-
+from chat import views
 
 urlpatterns = [
     path("api/schema/", SpectacularAPIView.as_view(), name="api-schema"),
@@ -25,5 +25,9 @@ urlpatterns = [
          name='swagger-ui'),
     path("admin/", admin.site.urls),
     path('api/user/', include('user.urls')),
+    path('api/chat/', include('chat.urls')),
+    # New URL pattern for the chat view
+    path('chat', views.simple_chat_view, name='chat'),
+
 
 ]

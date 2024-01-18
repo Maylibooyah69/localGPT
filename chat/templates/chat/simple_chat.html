@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Live Chat</title>
+    <style>
+      #chat-box {
+        width: 300px;
+        height: 400px;
+        border: 1px solid black;
+        overflow: auto;
+      }
+      #message-input {
+        width: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="chat-box"></div>
+    <form id="message-form">
+      <input id="message-input" type="text" />
+      <button type="submit">Send</button>
+    </form>
+
+    <script>
+      const messageForm = document.getElementById("message-form");
+      const messageInput = document.getElementById("message-input");
+      const chatBox = document.getElementById("chat-box");
+
+      messageForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const message = messageInput.value;
+        messageInput.value = "";
+        chatBox.innerHTML += "<p>" + message + "</p>";
+
+        // Here, you would also send the message to your LLM backend.
+        // This will depend on how you're connecting to the LLM.
+      });
+    </script>
+  </body>
+</html>
