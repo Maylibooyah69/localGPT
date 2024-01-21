@@ -13,8 +13,23 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 
     def create(self, validated_data):
-        """Create and return a user with encrypted password."""
+        username = validated_data.get('name')
+        email = validated_data.get('email')
+
+        if get_user_model().objects.filter(name=username).exists():
+            raise serializers.ValidationError(
+                {"username": "A user with this username already exists."})
+
+        if get_user_model().objects.filter(email=email).exists():
+            raise serializers.ValidationError(
+                {"email": "A user with this email already exists."})
+
         return get_user_model().objects.create_user(**validated_data)
+
+    # def create(self, validated_data):
+    #     """Create and return a user with encrypted password."""
+
+    #     return get_user_model().objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
         """Update and return user."""

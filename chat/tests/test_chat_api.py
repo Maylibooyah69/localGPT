@@ -131,19 +131,22 @@ class PrivateChatAPITests(TestCase):
         self.assertEqual(chat.user, self.user)
 
     def test_update_and_generate(self):
-        """Test updating a chat with put."""
+        """Test updating a chat with patch."""
         chat = create_chat(user=self.user)
+        with open('chat/liveChatClient/memory.json', 'r') as f:
+            data = json.load(f)
+        # print(type(data))
         payload = {
             'title': 'New Title',
             'summary': 'New Summary',
-            'content': json.dumps({}),
+            'content': json.dumps(data),
         }
+
         url = detail_url(chat.id)
         res = self.client.put(url, payload)
-
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         chat.refresh_from_db()
         self.assertEqual(chat.title, payload['title'])
         self.assertEqual(chat.summary, payload['summary'])
-        self.assertEqual(json.loads(payload['content']), chat.content)
+        self.assertEqual(data, chat.content)
         self.assertEqual(chat.user, self.user)

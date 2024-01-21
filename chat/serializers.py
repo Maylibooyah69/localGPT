@@ -9,10 +9,12 @@ class ChatSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Chat
-        fields = ['id', 'title', 'summary']
+        fields = ['id', 'title', 'summary', 'content']
         read_only_fields = ['id',]
 
 
 class ChatDetailSerializer(ChatSerializer):
     class Meta(ChatSerializer.Meta):
-        fields = ChatSerializer.Meta.fields + ['content',]
+        fields = ChatSerializer.Meta.fields
+
+
