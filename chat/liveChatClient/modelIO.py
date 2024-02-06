@@ -14,9 +14,14 @@ def load_GPT4all(path='../chatModels/mistral-7b-instruct-v0.1.Q4_0.gguf', chat_m
 
 
 def load_openAI(chat=True):
+    with open('openaiKey.md', 'r') as file:
+        openai_api_key = file.read().strip()
     if chat:
         from langchain.llms import OpenAIChat
-        return OpenAIChat(openai_api_key="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")
+        with open('openaiKey.md', 'r') as file:
+            openai_api_key = file.read().strip()
+        return OpenAIChat(openai_api_key=openai_api_key)
     else:
         from langchain.llms import OpenAI
-        return OpenAI(openai_api_key="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")
+        return OpenAI(openai_api_key=openai_api_key)
+
